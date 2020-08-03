@@ -1,10 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Persistance
 {
-    public class DataContext: DbContext
+    public class DataContext: IdentityDbContext<AppUser>
     {
         public DataContext(DbContextOptions<DataContext> options): base(options)
         {
@@ -16,6 +17,7 @@ namespace Persistance
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder); // I need this for Identity
             builder.Entity<Value>().HasData(
                 new Value() { Id = 1, Name = "Value 101" },
                 new Value() { Id = 2, Name = "Value 102" },
